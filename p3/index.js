@@ -4,7 +4,7 @@ async function get(url) {
   return json;
 }
 
-let url = "../data/news.json";
+let url = "news.json";
 let newsData = []; //存放新闻数据
 let news = document.querySelector(".news"); //新闻容器
 let pagination = document.querySelector(".pagination"); //分页容器
@@ -18,10 +18,15 @@ function renderNews() {
   news.innerHTML = " ";
   newsDataRender = newsData.slice((p - 1) * 5, 5 * p); //每页要显示的数据,一页显示5条，p为当前页码
   console.log(newsDataRender);
-
   let tpl = document.getElementById("tpl").innerHTML;
   //【需要完成代码1】：此处实现新闻模板内容的渲染
-
+  let content = newsDataRender.map((newsDataRender) => {
+    let result = tpl
+      .replace("{{title}}", newsDataRender.title)
+      .replace("{{content}}", newsDataRender.content);
+    return result;
+  }).join("");
+  news.innerHTML = content;
 }
 
 // 渲染分页器函数
@@ -95,7 +100,15 @@ async function run() {
   //页码跳转
   let skipInput = document.querySelector(".skip input");
   //【需要完成代码2】：此处实现输入页码回车跳转
-  
+  let position = skipInput.value;
+  if (position >= 1 && position <= asAll.length) {
+    p = position;
+    changePageClass(p);
+    renderNews();
+  }
+  else {
+    return;
+  }
 }
 
 //执行
