@@ -100,7 +100,8 @@ async function run() {
   //页码跳转
   let skipInput = document.querySelector(".skip input");
   //【需要完成代码2】：此处实现输入页码回车跳转
-  let position = skipInput.value;
+  skipInput.addEventListener("input", (event) => { 
+    let position = event.target.value;
   if (position >= 1 && position <= asAll.length) {
     p = position;
     changePageClass(p);
@@ -109,6 +110,7 @@ async function run() {
   else {
     return;
   }
+   });
 }
 
 //执行
